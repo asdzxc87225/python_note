@@ -18,7 +18,7 @@
 ## run程式前建議先
 ```
 跑之前建議先開啟虛擬環境。
-雖然應該還是會報錯。
+雖然應該還是會報錯 。
 ```
 ```sh
 source tutorial-env/bin/activate
