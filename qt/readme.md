@@ -4,38 +4,57 @@
 
 我請gpt幫我設計20個基本練習。幾本先分成兩個階段由於qt的坑真的太大所以一個一個的指令去聊解對於實做並沒有太大的幫助，所以第一階段先以實做也就是20個基本練習來作為入門，先體驗架構大概了解寫一個界面的結構，第二街對在針對細節去做研究這部份就要仰賴官方的文擋了。
 
+範例都放到example裡可以去查看
+
+
+----
 ### 01:Hello PyQt 
 
 第一個範例這個是一個顯示Hello, Pyqt的一個視窗。
 主要讓我們練習如何設定標題，與視窗大小與加入文字標籤等等。
 main的部份就是練習如何使用這個視窗。
 使用這個要了解sys的函數庫。
+#### 使用到的函數庫
+- sys
+##### qt的函數
+- QApplication
+- QMainWindow
+- QLable
+
+
+##### 引入函數庫
+
 ```py
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel
+```
+##### MyWindow的物件
 
-class MyWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
+- 設定視窗標題
+- 設定視窗大小
+- 建立物件
 
-        # 设置窗口标题
-        self.setWindowTitle("第一個pyqt程式")
+繼承QMainWindow的變數與函數
+```py
+super().__init__()
+```
 
-        # 设置窗口大小
-        self.setGeometry(100, 100, 400, 200)
+|函數 | 功能|
+| -- | -- |
+| setWindowTitle | 設定視窗的標題 |
+| setGeometry | 設定大小 |
 
-        # 创建标签控件
-        label = QLabel("Hello, PyQt!", self)
-        label.move(150, 80)
-
+##### 開啟窗口的方法
+要使用我們設定的視窗要調用到sys的函數庫，來控制開始與結束。
+```py
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MyWindow()
     window.show()
     sys.exit(app.exec_())
+```
 
-  ```
-
+----
 ### 02:按鈕和事件處理 
 
 - 建立一個視窗內有一個按鈕
@@ -43,50 +62,34 @@ if __name__ == "__main__":
 
 我修改了gpt 給我的範例，在他的基礎上我家了一個if結構。
 主要功能只是讓他在兩個狀態切換讓他有開關的感覺
-
+#### 引入的函數庫
+- sys
+#### qt函數庫
+- QApplication
+- QMainWindow
+- QPushButton
+- QLabel
 ```py
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel
-
-class MyWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
-
-        # 设置視窗title
-        self.setWindowTitle("按鈕事件範例")
-
-        # 设置視窗大小
-        self.setGeometry(100, 100, 400, 200)
-
-        # 建立標籤
-        self.label = QLabel("狀態1", self)
-        self.label.move(150, 80)
-
-        # 建力按鈕
-        self.button = QPushButton("點擊", self)
-        self.button.move(150, 120)
-
-        # 按鈕觸發後的運行動作
-        self.button.clicked.connect(self.on_button_click)
-        self.flage = True
-
-    def on_button_click(self):
-        # 按鈕觸發後執行動作
-        if self.flage :
-            self.label.setText("狀態2")
-            self.flage = False
-        else :
-            self.label.setText("狀態1")
-            self.flage = True
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = MyWindow()
-    window.show()
-    sys.exit(app.exec_())
-
 ```
+#### 使用的方法
 
+##### 設定樣式與位置
+
+```py
+按鈕變數 = QPushButton("按鈕上的文字", self)
+```
+|方法 	|參數 	|說明|
+| -- | -- | --|
+|move() 	|x, y 	|設定 QPushButton 在擺放的父元件中的 xy 座標，x 往右為正，y 往下為正，尺寸根據內容自動延伸。|
+|setGeometry() 	|x, y, w, h 	|設定 QPushButton 在擺放的父元件中的 xy 座標和長寬尺寸，x 往右為正，y 往下為正，如果超過長寬尺寸，預設會被裁切無法顯示。|
+
+##### 觸發的方式
+```py
+按鈕變數.clicked.connect(運形函數)
+```
+----
 ### 03:布局管理
 
 這個部份就有點複雜，在排版上我認為用這個會方便一些。
