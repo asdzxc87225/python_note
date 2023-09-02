@@ -156,119 +156,113 @@ central_widget.setLayout(vbox)
 ### 04:對話框
 
 程式在閱讀時先看MyWindow這個主視窗，可以知道只有一個按鈕之後就是觸發後的事件。
+
 這個範例我們可以感受到class美好在主視窗的class，我們只要煩惱布局的問題就號，其他的就交給各自的class去負責。
 MyDialog定義上市對話框，可以用來作為提示警告引導輸入等功能，這個範例就是簡提示使用者輸入之後再按確定送出。
+
+這個範例就分成兩個部份來讀，如何建立對話框與調用對話框。
+
+#### 使用的套件
 ```py
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QDialog, QVBoxLayout, QLineEdit
-
-class MyDialog(QDialog):
-    def __init__(self):
-        super().__init__()
-
-        # 設定對會框title
-        self.setWindowTitle("輸入對話框")
-
-        # 建立對話框的布局
-        layout = QVBoxLayout()
-
-        # 建立文字輸入框
-        self.text_input = QLineEdit(self)
-        layout.addWidget(self.text_input)
-
-        # 建立確定按鈕
-        self.ok_button = QPushButton("確定", self)
-        layout.addWidget(self.ok_button)
-        self.ok_button.clicked.connect(self.on_ok_button_click)
-
-        # 設定對話框的布局
-        self.setLayout(layout)
-
-    def on_ok_button_click(self):
-        # 當使用點擊卻動按鈕時，獲取文字輸入框中的文字
-        user_input = self.text_input.text()
-        print("使用者輸入:", user_input)
-        self.accept()
-
-class MyWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
-
-        # 設定視窗標題
-        self.setWindowTitle("主視窗")
-
-        # 建立按鈕，用於打開對話框
-        self.open_dialog_button = QPushButton("打開對話框", self)
-        self.open_dialog_button.clicked.connect(self.open_dialog)
-        self.setCentralWidget(self.open_dialog_button)
-
-    def open_dialog(self):
-        # 建立並顯示對話框
-        dialog = MyDialog()
-        result = dialog.exec_()
-        if result == QDialog.Accepted:
-            print("使用者按了確定按鈕")
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = MyWindow()
-    window.show()
-    sys.exit(app.exec_())
-
 ```
+
+- QApplication 
+- QMainWindow
+- QPushButton
+- QVBoxLayout
+#### 這次教特別的套件
+- QDialog
+- QLineEdit
+
+[Dialog](https://doc.qt.io/qt-6/qdialog.html#details) 這個套件就是本次做對話框的套件，可以用於提醒使用者要注意的事項或使指引使用者輸入。
+
+[QLineEdit](https://doc.qt.io/qt-6/qlineedit.html)這個是一個文字輸入框，可以讓使用者輸入單行文字資料。
+
+#### 如何建立對話框
+
+建立的方法跟主視窗對比起來就會很明確。
+
+```py
+class MyDialog(QDialog): #對話框建立的起手勢
+    def __init__(self):
+        super().__init__()
+
+class MyWindow(QMainWindow):#主視窗建立的起手勢
+    def __init__(self):
+        super().__init__()
+```
+可以發現他們結構根本一樣，但是他們繼承的類別有一點不同。
+#### 使用對話框
+使用的方式基本上就是宣告一個變數讓它代表對話框，之後在用exec_()來啟動。
+結束的方式通常是用按鈕觸發這個.accept() 函數後結束。
+
+```py
+dialog = MyDialog() #對話框的使用
+result = dialog.exec_()
+
+window = MyWindow()#主視窗的使用
+window.show()
+sys.exit(app.exec_())
+```
+
+---
 
 ### 05:菜單與工具欄
 
 Menu Bur 與 Tool Bar 在我看來就是兩種選單試過就知道了，目前看來就是跟按鈕的功能很像觸發後執行某些事件。
 QAction建立選單內的內容，範例程式基本上就是先建立QAction再把建立好的物件加入MnuBar或是
 ToolBar內部之後在顯示。
+#### 使用的套件
 ```py
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QAction, QToolBar
+```
 
-class MyWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
+- QApplication
+- QMainWindow
 
-        # 設定主視窗標題
-        self.setWindowTitle("菜單欄與工具欄的範例")
+這次的套件
+- QAction
+- QToolBar
 
+#### 建立Action與ToolBar的方法
+我們可以用建立工具欄與菜單
+```py
+menubar = self.menuBar()
+file_menu = menubar.addMenu("文件")
 
-        # 創見問建菜單選項
-        new_action = QAction("新建", self)
-        open_action = QAction("打开", self)
-        save_action = QAction("保存", self)
-        exit_action = QAction("退出", self)
-        exit_action.triggered.connect(self.close)
+toolbar = QToolBar("工具欄")
+self.addToolBar(toolbar)
+```
 
-        # 建立菜單欄
-        menubar = self.menuBar()
-        # 建立文件菜單
-        file_menu = menubar.addMenu("文件")
-        # 將菜單選項添加到文件菜單
+#### 加入元件的方法
+只有上面的那幾行，菜單內的東西是空的所以我們要先準備要加入的材料。
 
-        file_menu.addAction(new_action)
-        file_menu.addAction(open_action)
-        file_menu.addAction(save_action)
-        file_menu.addSeparator()
-        file_menu.addAction(exit_action)
+下面這個範例就是定義要加入菜單或是工具欄的東西，最下面那行就是示範要如何加入觸發時要如何call函數。
+```py
+new_action = QAction("新建", self)
+open_action = QAction("打开", self)
+save_action = QAction("保存", self)
+exit_action = QAction("退出", self)
+exit_action.triggered.connect(self.close)
+```
+準備好之後就可以加入菜單內。
 
-        # 建立工具欄
-        toolbar = QToolBar("工具欄")
-        self.addToolBar(toolbar)
-
+```py
         # 在工具欄上添加工具按鈕
         toolbar.addAction(new_action)
         toolbar.addAction(open_action)
         toolbar.addAction(save_action)
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = MyWindow()
-    window.show()
-    sys.exit(app.exec_())
+        # 將菜單選項添加到文件菜單
+        file_menu.addAction(new_action)
+        file_menu.addAction(open_action)
+        file_menu.addAction(save_action)
 ```
 
+---
 ### 06:多個視窗應用程式
 
 這個就是兩個視窗，程式結構基本一樣只是一個在上層令一個就等上層的呼叫。
