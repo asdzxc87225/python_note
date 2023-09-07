@@ -12,10 +12,22 @@
 ## run程式前建議先
 
 跑之前建議先開啟虛擬環境。
-雖然應該還是會報錯 。
+有些程式對於某些版本會不支援，任何對於版本的設定或是其他相關設定都會有可能讓程式不正常
+，所以建立一個虛擬環境可以避免互相影響的問題。
+
+### 建立虛擬環境
+
+```sh
+python -m venv tutorial-env
+```
+### 開啟虛擬環境
 
 ```sh
 source tutorial-env/bin/activate
+```
+### 關閉虛擬環境
+```py
+deactivate
 ```
 ## 現在目標
 
@@ -24,4 +36,5 @@ source tutorial-env/bin/activate
 - [ ] python 與資料庫
 - [ ] python serial 讀取arduino
 - [ ] python Matplotlib
+- [ ] pyspice 
 
