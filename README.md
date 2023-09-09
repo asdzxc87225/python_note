@@ -37,4 +37,5 @@ deactivate
 - [ ] python serial 讀取arduino
 - [ ] python Matplotlib
 - [ ] pyspice 
+- [ ] python 資料型別練習
 

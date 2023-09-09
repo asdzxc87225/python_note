@@ -71,6 +71,34 @@ names = ["Alice", "Bob", "Charlie"]
 numbers.append(6)  # 添加元素
 element = numbers[2]  # 獲取元素
 ```
+### 官方的參考資料
+[python3.9](https://docs.python.org/3.9/tutorial/index.html)
+版本的部份大家注意，因為有些新版會有套件不穩定的問題。
+list.append()
+list.extend()
+```py
+>>> fruits = ['orange', 'apple', 'pear', 'banana', 'kiwi', 'apple', 'banana']
+>>> fruits.count('apple')
+2
+>>> fruits.count('tangerine')
+0
+>>> fruits.index('banana')
+3
+>>> fruits.index('banana', 4)  # Find next banana starting a position 4
+6
+>>> fruits.reverse()
+>>> fruits
+['banana', 'apple', 'kiwi', 'banana', 'pear', 'apple', 'orange']
+>>> fruits.append('grape')
+>>> fruits
+['banana', 'apple', 'kiwi', 'banana', 'pear', 'apple', 'orange', 'grape']
+>>> fruits.sort()
+>>> fruits
+['apple', 'apple', 'banana', 'banana', 'grape', 'kiwi', 'orange', 'pear']
+>>> fruits.pop()
+'pear'
+```
+
 ## 元組（tuple）
 元組類似於列表，但它們是不可變的，一旦創建就不能修改。
 

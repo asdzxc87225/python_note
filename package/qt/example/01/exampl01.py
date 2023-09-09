@@ -14,9 +14,12 @@ class MyWindow(QMainWindow):
         # 创建标签控件
         label = QLabel("Hello, PyQt!", self)
         label.move(150, 80)
+    def type ():
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MyWindow()
     window.show()
     sys.exit(app.exec_())
+
