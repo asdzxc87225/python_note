@@ -1,0 +1,6 @@
+[submodule "package/qt/example/01/path/to/jedi"]
+	path = package/qt/example/01/path/to/jedi
+	url = https://github.com/davidhalter/jedi.git
+[submodule "path/to/jedi"]
+	path = path/to/jedi
+	url = https://github.com/davidhalter/jedi.git
