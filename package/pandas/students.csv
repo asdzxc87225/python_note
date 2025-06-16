@@ -1,0 +1,5 @@
+id,name,gender,class,math,english,science,age,join_date
+1,Alice,F,1,85,78,92,16,2021-09-01
+2,Bob,M,1,55,67,80,15,2021-09-01
+3,Charlie,M,2,90,88,85,17,2021-09-01
+
